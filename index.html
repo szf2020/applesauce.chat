@@ -466,6 +466,155 @@
       color: var(--text-dim);
     }
 
+    /* ════ Card Visuals ════ */
+
+    /* Pickl — scanning label animation */
+    /* Pickl — scrolling ingredient scanner */
+    .pickl-showcase {
+      position: relative;
+      margin: 0 -24px 16px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--card-border);
+      background: linear-gradient(135deg, color-mix(in srgb, var(--accent-green) 4%, transparent), transparent);
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+    .pickl-showcase::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+      box-shadow: 0 0 12px var(--accent-green);
+      animation: scanLine 2.5s ease-in-out infinite;
+      z-index: 2;
+    }
+    @keyframes scanLine {
+      0%, 100% { top: 8%; opacity: 0.3; }
+      50% { top: 88%; opacity: 1; }
+    }
+    .pickl-track {
+      display: flex;
+      gap: 8px;
+      padding: 14px 0;
+      animation: pickl-scroll 25s linear infinite;
+    }
+    .pickl-track:hover { animation-play-state: paused; }
+    @keyframes pickl-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .pickl-pill {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--card-border);
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .pickl-pill:hover { transform: scale(1.08); }
+    .pickl-pill.safe { color: var(--accent-green); background: color-mix(in srgb, var(--accent-green) 8%, transparent); }
+    .pickl-pill.safe:hover { border-color: var(--accent-green); }
+    .pickl-pill.warn { color: var(--accent-gold); background: color-mix(in srgb, var(--accent-gold) 8%, transparent); }
+    .pickl-pill.warn:hover { border-color: var(--accent-gold); }
+    .pickl-pill.bad { color: var(--accent-red); background: color-mix(in srgb, var(--accent-red) 8%, transparent); }
+    .pickl-pill.bad:hover { border-color: var(--accent-red); }
+    .pickl-score {
+      position: absolute;
+      right: 16px; top: 50%; transform: translateY(-50%);
+      font-family: var(--font-heading);
+      font-size: var(--text-xl);
+      color: var(--accent-green);
+      text-shadow: 0 0 20px color-mix(in srgb, var(--accent-green) 40%, transparent);
+      z-index: 3;
+      background: var(--bg);
+      padding: 4px 10px;
+      border-radius: 8px;
+      border: 1px solid color-mix(in srgb, var(--accent-green) 20%, transparent);
+    }
+
+    /* Tome — scrolling document feed */
+    .tome-showcase {
+      position: relative;
+      margin: 0 -24px 16px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--card-border);
+      background: linear-gradient(135deg, color-mix(in srgb, var(--accent-primary) 4%, transparent), transparent);
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+    .tome-track {
+      display: flex;
+      gap: 10px;
+      padding: 12px 0;
+      animation: tome-scroll 30s linear infinite;
+    }
+    .tome-track:hover { animation-play-state: paused; }
+    @keyframes tome-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .tome-doc {
+      flex-shrink: 0;
+      width: 140px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+      background: color-mix(in srgb, var(--bg-surface) 60%, transparent);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .tome-doc:hover { transform: scale(1.05); border-color: var(--accent-primary); }
+    .tome-doc-icon {
+      font-size: 0.7rem;
+      margin-bottom: 4px;
+      display: flex; align-items: center; gap: 4px;
+      color: var(--text-dim);
+    }
+    .tome-doc-icon .dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--accent-primary);
+      display: inline-block;
+    }
+    .tome-doc-title {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+    }
+    .tome-doc-snippet {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      color: var(--text-dim);
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .tome-search-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 6px 16px;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid var(--card-border);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-dim);
+      display: flex; align-items: center; gap: 4px;
+      z-index: 2;
+    }
+    .tome-search-bar::before { content: '>'; color: var(--accent-primary); }
+    .tome-cursor {
+      display: inline-block;
+      width: 6px; height: 12px;
+      background: var(--accent-primary);
+      animation: cursorBlink 1s step-end infinite;
+    }
+    @keyframes cursorBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
     /* ════ Marquee ════ */
     .product-showcase {
       margin: 16px -24px;
@@ -827,30 +976,164 @@
           <a href="https://sell.applesauce.chat" class="btn-primary" style="margin-top: 16px;">Try Sell Applesauce</a>
         </div>
 
-        <div class="glass-card tilt-card reveal" style="position:relative;">
+        <div class="glass-card tilt-card reveal" style="position:relative; overflow:hidden;">
           <div class="card-shine"></div>
-          <div class="product-status status-live"><span class="dot"></span> Live</div>
-          <h3>Pickl</h3>
-          <p>Photo-to-safety-report for food and cosmetics. Snap a label, get an instant breakdown of ingredients, additives, allergens, and a safety score. Know what you're buying.</p>
-          <div class="tech-tags">
-            <span>fastapi</span>
-            <span>openai</span>
-            <span>food safety</span>
+          <div class="pickl-showcase">
+            <div class="pickl-track">
+              <span class="pickl-pill safe">Vitamin C</span>
+              <span class="pickl-pill safe">Citric Acid</span>
+              <span class="pickl-pill warn">Yellow #5</span>
+              <span class="pickl-pill safe">Niacin</span>
+              <span class="pickl-pill bad">BHA</span>
+              <span class="pickl-pill safe">Riboflavin</span>
+              <span class="pickl-pill warn">Carrageenan</span>
+              <span class="pickl-pill safe">Iron</span>
+              <span class="pickl-pill safe">Calcium</span>
+              <span class="pickl-pill bad">Sodium Nitrite</span>
+              <span class="pickl-pill safe">Thiamine</span>
+              <span class="pickl-pill warn">Soy Lecithin</span>
+              <span class="pickl-pill safe">Folic Acid</span>
+              <span class="pickl-pill bad">Red #40</span>
+              <span class="pickl-pill safe">Zinc</span>
+              <span class="pickl-pill warn">Maltodextrin</span>
+              <span class="pickl-pill safe">Biotin</span>
+              <span class="pickl-pill safe">Potassium</span>
+              <!-- duplicate for seamless loop -->
+              <span class="pickl-pill safe">Vitamin C</span>
+              <span class="pickl-pill safe">Citric Acid</span>
+              <span class="pickl-pill warn">Yellow #5</span>
+              <span class="pickl-pill safe">Niacin</span>
+              <span class="pickl-pill bad">BHA</span>
+              <span class="pickl-pill safe">Riboflavin</span>
+              <span class="pickl-pill warn">Carrageenan</span>
+              <span class="pickl-pill safe">Iron</span>
+              <span class="pickl-pill safe">Calcium</span>
+              <span class="pickl-pill bad">Sodium Nitrite</span>
+              <span class="pickl-pill safe">Thiamine</span>
+              <span class="pickl-pill warn">Soy Lecithin</span>
+              <span class="pickl-pill safe">Folic Acid</span>
+              <span class="pickl-pill bad">Red #40</span>
+              <span class="pickl-pill safe">Zinc</span>
+              <span class="pickl-pill warn">Maltodextrin</span>
+              <span class="pickl-pill safe">Biotin</span>
+              <span class="pickl-pill safe">Potassium</span>
+            </div>
+            <span class="pickl-score">A+</span>
           </div>
-          <a href="https://pickl.applesauce.chat" class="btn-secondary" style="margin-top: 12px;">Try Pickl</a>
+          <div style="padding: 0 24px 24px;">
+            <div class="product-status status-live"><span class="dot"></span> Live</div>
+            <h3>Pickl</h3>
+            <p>Snap a label. Get the truth. Instant safety breakdown of every ingredient, additive, and allergen — color-coded so you know what's sketch before it hits your cart.</p>
+            <div class="tech-tags">
+              <span>fastapi</span>
+              <span>gpt vision</span>
+              <span>56 additives</span>
+              <span>82 cosmetics</span>
+            </div>
+            <a href="https://pickl.applesauce.chat" class="btn-secondary" style="margin-top: 12px;">Scan Something</a>
+          </div>
         </div>
 
-        <div class="glass-card tilt-card reveal" style="position:relative;">
+        <div class="glass-card tilt-card reveal" style="position:relative; overflow:hidden;">
           <div class="card-shine"></div>
-          <div class="product-status status-soon"><span class="dot"></span> Coming Soon</div>
-          <h3>Tome</h3>
-          <p>Your personal knowledge engine. Upload documents, notes, and research — Tome organizes, connects, and lets you query everything you know.</p>
-          <div class="tech-tags">
-            <span>fastapi</span>
-            <span>rag</span>
-            <span>knowledge base</span>
+          <div class="tome-showcase">
+            <div class="tome-track">
+              <div class="tome-doc">
+                <div class="tome-doc-icon"><span class="dot"></span> pdf</div>
+                <div class="tome-doc-title">Zero Bail Analysis</div>
+                <div class="tome-doc-snippet">Recidivism rates for zero-bail defendants across LA County</div>
+              </div>
+              <div class="tome-doc">
+                <div class="tome-doc-icon"><span class="dot"></span> note</div>
+                <div class="tome-doc-title">LLM Risk Aversion</div>
+                <div class="tome-doc-snippet">Models consistently avoid losses at 2.3x the rate of equivalent gains</div>
+              </div>
+              <div class="tome-doc">
+                <div class="tome-doc-icon"><span class="dot"></span> url</div>
+                <div class="tome-doc-title">Transformer Internals</div>
+                <div class="tome-doc-snippet">Attention heads specialize for syntactic vs semantic roles</div>
+              </div>
+              <div class="tome-doc">
+                <div class="tome-doc-icon"><span class="dot"></span> md</div>
+                <div class="tome-doc-title">Prospect Theory Notes</div>
+                <div class="tome-doc-snippet">Kahneman & Tversky 1979 — value function is concave for gains</div>
+              </div>
+              <div class="tome-doc">
+                <div class="tome-doc-icon"><span class="dot"></span> pdf</div>
+                <div class="tome-doc-title">Market Simulation</div>
+                <div class="tome-doc-snippet">Agent-based model of double auction with bounded rationality</div>
+              </div>
+              <div class="tome-doc">
+                <div class="tome-doc-icon"><span class="dot"></span> csv</div>
+                <div class="tome-doc-title">Experiment Results</div>
+                <div class="tome-doc-snippet">1,247 trials across GPT-4, Claude, Gemini on ultimatum game</div>
+              </div>
+              <div class="tome-doc">
+                <div class="tome-doc-icon"><span class="dot"></span> tex</div>
+                <div class="tome-doc-title">Dissertation Ch. 3</div>
+                <div class="tome-doc-snippet">Behavioral convergence in multi-round negotiation protocols</div>
+              </div>
+              <div class="tome-doc">
+                <div class="tome-doc-icon"><span class="dot"></span> py</div>
+                <div class="tome-doc-title">Nash Equilibrium</div>
+                <div class="tome-doc-snippet">Iterative best response solver for n-player games</div>
+              </div>
+              <!-- duplicate for seamless loop -->
+              <div class="tome-doc">
+                <div class="tome-doc-icon"><span class="dot"></span> pdf</div>
+                <div class="tome-doc-title">Zero Bail Analysis</div>
+                <div class="tome-doc-snippet">Recidivism rates for zero-bail defendants across LA County</div>
+              </div>
+              <div class="tome-doc">
+                <div class="tome-doc-icon"><span class="dot"></span> note</div>
+                <div class="tome-doc-title">LLM Risk Aversion</div>
+                <div class="tome-doc-snippet">Models consistently avoid losses at 2.3x the rate of equivalent gains</div>
+              </div>
+              <div class="tome-doc">
+                <div class="tome-doc-icon"><span class="dot"></span> url</div>
+                <div class="tome-doc-title">Transformer Internals</div>
+                <div class="tome-doc-snippet">Attention heads specialize for syntactic vs semantic roles</div>
+              </div>
+              <div class="tome-doc">
+                <div class="tome-doc-icon"><span class="dot"></span> md</div>
+                <div class="tome-doc-title">Prospect Theory Notes</div>
+                <div class="tome-doc-snippet">Kahneman & Tversky 1979 — value function is concave for gains</div>
+              </div>
+              <div class="tome-doc">
+                <div class="tome-doc-icon"><span class="dot"></span> pdf</div>
+                <div class="tome-doc-title">Market Simulation</div>
+                <div class="tome-doc-snippet">Agent-based model of double auction with bounded rationality</div>
+              </div>
+              <div class="tome-doc">
+                <div class="tome-doc-icon"><span class="dot"></span> csv</div>
+                <div class="tome-doc-title">Experiment Results</div>
+                <div class="tome-doc-snippet">1,247 trials across GPT-4, Claude, Gemini on ultimatum game</div>
+              </div>
+              <div class="tome-doc">
+                <div class="tome-doc-icon"><span class="dot"></span> tex</div>
+                <div class="tome-doc-title">Dissertation Ch. 3</div>
+                <div class="tome-doc-snippet">Behavioral convergence in multi-round negotiation protocols</div>
+              </div>
+              <div class="tome-doc">
+                <div class="tome-doc-icon"><span class="dot"></span> py</div>
+                <div class="tome-doc-title">Nash Equilibrium</div>
+                <div class="tome-doc-snippet">Iterative best response solver for n-player games</div>
+              </div>
+            </div>
+            <div class="tome-search-bar"><span id="tomeQuery"></span><span class="tome-cursor"></span></div>
           </div>
-          <a href="https://tome.applesauce.chat" class="btn-secondary" style="margin-top: 12px;">Try Tome</a>
+          <div style="padding: 0 24px 24px;">
+            <div class="product-status status-soon"><span class="dot"></span> Coming Soon</div>
+            <h3>Tome</h3>
+            <p>Everything you know, queryable. Drop in papers, notes, bookmarks — Tome maps connections you didn't see and answers questions across your entire knowledge base.</p>
+            <div class="tech-tags">
+              <span>fastapi</span>
+              <span>rag</span>
+              <span>embeddings</span>
+              <span>knowledge graph</span>
+            </div>
+            <a href="https://tome.applesauce.chat" class="btn-secondary" style="margin-top: 12px;">Try Tome</a>
+          </div>
         </div>
 
         <div class="glass-card tilt-card reveal" style="position:relative;">
@@ -1076,6 +1359,29 @@
           card.style.transform = '';
         });
       });
+    }
+
+    // Tome search typing
+    const tomeEl = document.getElementById('tomeQuery');
+    if (tomeEl) {
+      const queries = ['what did I highlight about prospect theory?', 'connections between risk + LLMs', 'find my notes on Kahneman 1979', 'how does loss aversion relate to RLHF?'];
+      let qi = 0, ci = 0, deleting = false;
+      function tomeType() {
+        const q = queries[qi];
+        if (!deleting) {
+          tomeEl.textContent = q.substring(0, ++ci);
+          if (ci >= q.length) { setTimeout(() => { deleting = true; tomeType(); }, 2000); return; }
+          setTimeout(tomeType, 50 + Math.random() * 40);
+        } else {
+          tomeEl.textContent = q.substring(0, --ci);
+          if (ci <= 0) { deleting = false; qi = (qi + 1) % queries.length; setTimeout(tomeType, 500); return; }
+          setTimeout(tomeType, 25);
+        }
+      }
+      const tomeObs = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) { tomeType(); tomeObs.disconnect(); }
+      }, { threshold: 0.3 });
+      tomeObs.observe(tomeEl.closest('.tome-showcase'));
     }
 
     // Terminal typing
