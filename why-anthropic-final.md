@@ -1,0 +1,13 @@
+# Why Anthropic
+
+My PhD research gives me an unusual vantage point on the question your team is trying to answer: how is AI actually changing work?
+
+Most approaches to measuring AI's economic impact treat the technology as a black box. They estimate task exposure from occupation descriptions and aggregate benchmarks, then project displacement or augmentation. That misses something fundamental. My dissertation shows that system prompts act as cognitive switches, flipping the same model between deliberative reasoning and textbook retrieval with nearly deterministic behavioral consequences. "Consider your values" produces 0% defection in a Prisoner's Dilemma. "Make your choice now" produces 83%. The model doesn't change. The prompt does. Any economic measurement of what AI "can do" is prompt-dependent in ways aggregate benchmarks can't capture.
+
+That's the measurement problem the Anthropic Economic Index will increasingly face. Anthropic has something no academic lab has: millions of real-world interactions showing how people actually prompt Claude across industries and occupations. The scoring system and linguistic markers I developed can classify reasoning mode from any LLM response using simple pattern matching. Applied to real-world usage data, that's a method for understanding not just what tasks people use AI for, but what kind of reasoning those interactions actually produce. Beyond the reasoning-mode question, I've been designing a study to update the Routine Task Index for LLMs: controlled experiments where workers perform diverse tasks with and without LLM assistance, identifying which occupations face real displacement pressure and where marginal costs have dropped enough to reshape product markets.
+
+My work at the Computational Justice Lab is the methodological template. I built a geocoding system from scratch in Python and Rust, 150 million records at 280 requests per second, because the measurement infrastructure I needed didn't exist and the commercial alternatives cost $200K a year. Then I ran causal inference studies on the data it produced: a regression discontinuity design on traffic stops that identified a 20-percentage-point racial gap in stop rates, findings I presented to state legislators. That's the same pattern your team follows. Build the measurement system. Then do the economics.
+
+I'd rather build the tool I need than wait for someone else to make it. What I can't get on my own is access to model internals, evals infrastructure, and collaborators thinking about capability measurement at the frontier. The Economic Index is where these questions are actually consequential. That's the version of this work I want to be doing.
+
+<!-- Word count: ~380 -->

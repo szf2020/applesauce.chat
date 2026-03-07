@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>William Wyatt - Resume</title>
+  <style>
+    @font-face { font-family: 'Inter'; font-weight: 400; src: url('fonts/Inter-Regular.ttf') format('truetype'); }
+    @font-face { font-family: 'Inter'; font-weight: 500; src: url('fonts/Inter-Medium.ttf') format('truetype'); }
+    @font-face { font-family: 'Inter'; font-weight: 600; src: url('fonts/Inter-SemiBold.ttf') format('truetype'); }
+    @font-face { font-family: 'Inter'; font-weight: 700; src: url('fonts/Inter-Bold.ttf') format('truetype'); }
+    @font-face { font-family: 'Source Serif 4'; font-weight: 400; src: url('fonts/SourceSerif4-Regular.ttf') format('truetype'); }
+    @font-face { font-family: 'Source Serif 4'; font-weight: 600; src: url('fonts/SourceSerif4-SemiBold.ttf') format('truetype'); }
+    @font-face { font-family: 'Source Serif 4'; font-weight: 700; src: url('fonts/SourceSerif4-Bold.ttf') format('truetype'); }
+
+    @page {
+      size: letter;
+      margin: 0;
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 9pt;
+      line-height: 1.35;
+      color: #1a1a2e;
+      background: #fff;
+      width: 8.5in;
+      min-height: 11in;
+      max-height: 11in;
+      padding: 0.45in 0.6in;
+      overflow: hidden;
+    }
+
+    a {
+      color: #4338ca;
+      text-decoration: none;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 6pt;
+      border-bottom: 2pt solid #1a1a2e;
+      margin-bottom: 7pt;
+    }
+
+    .header-left h1 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 22pt;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #1a1a2e;
+      line-height: 1.1;
+    }
+
+    .header-left .tagline {
+      font-size: 10pt;
+      color: #4338ca;
+      font-weight: 500;
+      margin-top: 2pt;
+    }
+
+    .header-right {
+      text-align: right;
+      font-size: 8.5pt;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .header-right a {
+      color: #555;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 6pt;
+    }
+
+    .section-title {
+      font-size: 9pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #4338ca;
+      border-bottom: 0.75pt solid #d1d5db;
+      padding-bottom: 1.5pt;
+      margin-bottom: 4pt;
+    }
+
+    /* Education */
+    .edu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2pt;
+    }
+
+    .edu-item .degree {
+      font-weight: 600;
+    }
+
+    .edu-item .school {
+      color: #555;
+    }
+
+    .edu-item .date {
+      font-size: 8.5pt;
+      color: #777;
+      white-space: nowrap;
+    }
+
+    .edu-dissertation {
+      font-size: 8pt;
+      color: #555;
+      font-style: italic;
+      padding-left: 0pt;
+      margin-top: 1pt;
+      margin-bottom: 2pt;
+    }
+
+    /* Experience / Research */
+    .entry {
+      margin-bottom: 5pt;
+    }
+
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .entry-title {
+      font-weight: 700;
+      font-size: 9pt;
+    }
+
+    .entry-org {
+      font-weight: 500;
+      color: #555;
+    }
+
+    .entry-date {
+      font-size: 8.5pt;
+      color: #777;
+      white-space: nowrap;
+    }
+
+    .entry ul {
+      margin-top: 2pt;
+      padding-left: 14pt;
+    }
+
+    .entry li {
+      margin-bottom: 1pt;
+      color: #333;
+    }
+
+    /* Publications */
+    .pub {
+      margin-bottom: 3pt;
+      padding-left: 10pt;
+      text-indent: -10pt;
+    }
+
+    .pub .pub-title {
+      font-weight: 600;
+    }
+
+    .pub .pub-venue {
+      font-style: italic;
+      color: #555;
+    }
+
+    /* Skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2pt 12pt;
+    }
+
+    .skill-cat {
+      font-weight: 600;
+      color: #1a1a2e;
+      white-space: nowrap;
+    }
+
+    .skill-list {
+      color: #444;
+    }
+
+    /* Print */
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <h1>William Wyatt</h1>
+      <div class="tagline">Economist &middot; AI Behavioral Research &middot; Measurement Infrastructure</div>
+    </div>
+    <div class="header-right">
+      Los Angeles, CA<br>
+      <a href="mailto:William.Wyatt@cgu.edu">William.Wyatt@cgu.edu</a><br>
+      <a href="https://gradstudent.me">gradstudent.me</a> &middot;
+      <a href="https://github.com/tsangares">github.com/tsangares</a><br>
+      <a href="https://linkedin.com/in/wyatt-william">linkedin.com/in/wyatt-william</a>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div style="font-size: 8.5pt; font-weight: 400; color: #333; margin-bottom: 6pt; line-height: 1.4;">
+    Economist studying how LLM behavior varies with prompt framing using large-scale experiments and causal inference. I build the data infrastructure my research requires.
+  </div>
+
+  <!-- Education -->
+  <div class="section">
+    <div class="section-title">Education</div>
+    <div class="edu-item">
+      <div><span class="degree">Ph.D. Economics</span> <span class="school">, Claremont Graduate University</span></div>
+      <div class="date">Expected Spring 2026</div>
+    </div>
+    <div class="edu-dissertation">Dissertation: "Participation or Observation: How Prompts Control LLM Reasoning"</div>
+    <div class="edu-item">
+      <div><span class="degree">M.S. Mathematics</span> <span class="school">, Claremont Graduate University</span></div>
+      <div class="date">2025</div>
+    </div>
+    <div class="edu-item">
+      <div><span class="degree">B.S. Physics</span> <span class="school">, University of California, Santa Cruz</span></div>
+      <div class="date">2016</div>
+    </div>
+  </div>
+
+  <!-- Research Experience -->
+  <div class="section">
+    <div class="section-title">Research Experience</div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <div><span class="entry-title">Doctoral Researcher, AI &amp; Behavioral Economics</span> <span class="entry-org">, Claremont Graduate University</span></div>
+        <div class="entry-date">2021 &ndash; Present</div>
+      </div>
+      <ul>
+        <li>Measured LLM economic decision-making through large-scale behavioral experiments: 283 prompt variations, 15K+ game-theoretic observations across multiple frontier models, establishing new methodologies for quantifying AI reasoning and risk behavior.</li>
+        <li>Found LLMs are 73.2% more likely than humans to take risks when bearing responsibility for others, a result with direct implications for AI deployment policy and economic impact assessment. Under review.</li>
+        <li>Applied causal inference (DiD, RDD, synthetic control) and structural estimation to novel datasets, including quasi-experimental evaluation of California's zero-bail policy on crime outcomes.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Professional Experience -->
+  <div class="section">
+    <div class="section-title">Professional Experience</div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <div><span class="entry-title">Data Scientist &amp; Research Lead</span> <span class="entry-org">, Computational Justice Lab, Claremont Graduate University</span></div>
+        <div class="entry-date">2020 &ndash; Present</div>
+      </div>
+      <ul>
+        <li>Built novel measurement infrastructure from scratch: geocoder (Python + Rust) processing 150M police stop records at 280 req/s, replacing external APIs and saving $200k/yr in licensing costs.</li>
+        <li>Led causal inference research on racial inequality using RDD and DiD on large administrative datasets, identifying a 20 percentage-point bias gap in stop rates across jurisdictional boundaries.</li>
+        <li>Designed quasi-experimental analysis of California zero bail policy and translated econometric findings into policy briefs for criminal justice reform stakeholders.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <div><span class="entry-title">Senior Data Scientist</span> <span class="entry-org">, Res-Intel</span></div>
+        <div class="entry-date">2023 &ndash; Present</div>
+      </div>
+      <ul>
+        <li>Built ML pipelines (YOLOv8, SAM, CLIP) and open-source tooling for large-scale data annotation.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <div><span class="entry-title">Software Engineer</span> <span class="entry-org">, Santa Cruz Institute for Particle Physics (SLAC)</span></div>
+        <div class="entry-date">2016 &ndash; 2019</div>
+      </div>
+      <ul>
+        <li>Built real-time DAQ and visualization systems (C++11/Qt); developed Monte Carlo simulation saving 1,000+ beam-time hours (~$250k).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Selected Publications -->
+  <div class="section">
+    <div class="section-title">Selected Publications &amp; Research</div>
+    <div class="pub"><span class="pub-title">Participation or Observation: How Prompts Control LLM Reasoning.</span> Job Market Paper (prompt-framing causal effects on LLM game-theoretic behavior), 2026.</div>
+    <div class="pub"><span class="pub-title">The Role of Responsibility in AI's Strategic Risk-Taking.</span> <span class="pub-venue">Under Review,</span> 2026.</div>
+    <div class="pub"><span class="pub-title">Measurable Effects from Emergency Zero Bail in California.</span> Working Paper, 2026.</div>
+    <div class="pub"><span class="pub-title">TrueNorth: Conversational Agentic RAG to Optimize STEM Engagement.</span> <span class="pub-venue">Accepted,</span> 2025.</div>
+    <div class="pub"><span class="pub-title">Private Security Confounds Estimates of Public Police and Crime.</span> <span class="pub-venue">Springer,</span> 2023.</div>
+    <div class="pub" style="margin-top: 2pt; font-size: 8.5pt; color: #777;">+ 6 peer-reviewed publications in experimental physics (NIM-A, CERN), 10 total</div>
+  </div>
+
+  <!-- Technical Skills -->
+  <div class="section">
+    <div class="section-title">Technical Skills</div>
+    <div class="skills-grid">
+      <div class="skill-cat">Languages:</div>
+      <div class="skill-list">Python (14 yrs), C++ (14 yrs), Rust (4 yrs), SQL (8 yrs), Stata (5 yrs), R (3 yrs)</div>
+      <div class="skill-cat">Econometrics:</div>
+      <div class="skill-list">Causal inference (DiD, IV, RDD, synthetic control), structural estimation, panel data, Bayesian methods, time series</div>
+      <div class="skill-cat">ML / AI:</div>
+      <div class="skill-list">PyTorch, LLM evaluation and fine-tuning, causal ML, transformer architectures, agentic systems, RAG</div>
+      <div class="skill-cat">Infrastructure:</div>
+      <div class="skill-list">Linux (15 yrs), Docker, distributed computing, large-scale data pipelines, privacy-preserving measurement</div>
+    </div>
+  </div>
+
+
+</body>
+</html>

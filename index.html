@@ -468,48 +468,230 @@
 
     /* ════ Card Visuals ════ */
 
-    /* Pickl CSS removed — now uses .graze-showcase */
-    @keyframes scanLine {
-      0%, 100% { top: 8%; opacity: 0.3; }
-      50% { top: 88%; opacity: 1; }
-    }
-    .graze-track {
+    /* Graze — safety report mockup */
+    .graze-report {
+      position: relative;
+      margin: 0 -24px 16px;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--card-border);
+      background: linear-gradient(160deg, color-mix(in srgb, var(--accent-green) 4%, var(--bg)), var(--bg));
       display: flex;
-      gap: 8px;
-      padding: 14px 0;
-      animation: graze-scroll 25s linear infinite;
+      gap: 16px;
+      align-items: center;
+      min-height: 120px;
     }
-    .graze-track:hover { animation-play-state: paused; }
-    @keyframes graze-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    .graze-pill {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      padding: 5px 10px;
-      border-radius: 6px;
-      border: 1px solid var(--card-border);
-      white-space: nowrap;
+    /* Score ring */
+    .graze-ring {
+      width: 72px; height: 72px;
       flex-shrink: 0;
-      transition: transform 0.2s, border-color 0.2s;
+      position: relative;
     }
-    .graze-pill:hover { transform: scale(1.08); }
-    .graze-pill.safe { color: var(--accent-green); background: color-mix(in srgb, var(--accent-green) 8%, transparent); }
-    .graze-pill.safe:hover { border-color: var(--accent-green); }
-    .graze-pill.warn { color: var(--accent-gold); background: color-mix(in srgb, var(--accent-gold) 8%, transparent); }
-    .graze-pill.warn:hover { border-color: var(--accent-gold); }
-    .graze-pill.bad { color: var(--accent-red); background: color-mix(in srgb, var(--accent-red) 8%, transparent); }
-    .graze-pill.bad:hover { border-color: var(--accent-red); }
-    .graze-score {
+    .graze-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .graze-ring-bg { fill: none; stroke: var(--card-border); stroke-width: 4; }
+    .graze-ring-fill {
+      fill: none;
+      stroke: var(--accent-green);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-dasharray: 188.5;
+      stroke-dashoffset: 188.5;
+      transition: stroke-dashoffset 1.5s cubic-bezier(.4,0,.2,1);
+      filter: drop-shadow(0 0 4px color-mix(in srgb, var(--accent-green) 50%, transparent));
+    }
+    .graze-ring.animated .graze-ring-fill { stroke-dashoffset: 16.9; }
+    .graze-ring-label {
       position: absolute;
-      right: 16px; top: 50%; transform: translateY(-50%);
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .graze-ring-score {
       font-family: var(--font-heading);
-      font-size: var(--text-xl);
+      font-size: var(--text-lg);
       color: var(--accent-green);
-      text-shadow: 0 0 20px color-mix(in srgb, var(--accent-green) 40%, transparent);
-      z-index: 3;
-      background: var(--bg);
-      padding: 4px 10px;
-      border-radius: 8px;
-      border: 1px solid color-mix(in srgb, var(--accent-green) 20%, transparent);
+      line-height: 1;
+    }
+    .graze-ring-sub {
+      font-family: var(--font-mono);
+      font-size: 0.4rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    /* Ingredient bars */
+    .graze-bars {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .graze-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: all 0.3s var(--ease-out);
+    }
+    .graze-report.animated .graze-bar-row { opacity: 1; transform: translateX(0); }
+    .graze-bar-name {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      width: 70px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .graze-bar-track {
+      flex: 1;
+      height: 6px;
+      background: var(--card-border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .graze-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      width: 0%;
+      transition: width 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    .graze-report.animated .graze-bar-fill { width: var(--fill); }
+    .graze-bar-fill.safe { background: var(--accent-green); }
+    .graze-bar-fill.warn { background: var(--accent-gold); }
+    .graze-bar-fill.bad { background: var(--accent-red); }
+    .graze-bar-val {
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      color: var(--text-dim);
+      width: 20px;
+    }
+
+    /* Compress — video compression showcase */
+    .compress-showcase {
+      position: relative;
+      margin: 0 -24px 16px;
+      padding: 20px 24px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--card-border);
+      background: linear-gradient(135deg, rgba(249,115,22,0.06), rgba(251,191,36,0.04), transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      min-height: 160px;
+    }
+    .compress-ring-wrap {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      flex-shrink: 0;
+    }
+    .compress-ring-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .compress-ring-bg { fill: none; stroke: var(--card-border); stroke-width: 5; }
+    .compress-ring-fill {
+      fill: none;
+      stroke: url(#compressGrad);
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-dasharray: 188.5;
+      stroke-dashoffset: 188.5;
+      transition: stroke-dashoffset 1.8s cubic-bezier(.4,0,.2,1);
+    }
+    .compress-showcase.animated .compress-ring-fill {
+      stroke-dashoffset: 50.9;
+    }
+    .compress-ring-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .compress-ring-pct {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+    }
+    .compress-ring-sub {
+      font-family: var(--font-body);
+      font-size: 0.55rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+    .compress-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+      max-width: 180px;
+    }
+    .compress-stat-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transform: translateX(12px);
+      transition: all 0.5s var(--ease-out);
+    }
+    .compress-showcase.animated .compress-stat-row {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .compress-stat-label {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      width: 44px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .compress-stat-bar {
+      flex: 1;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--card-border);
+      position: relative;
+      overflow: hidden;
+    }
+    .compress-stat-fill {
+      position: absolute;
+      top: 0; left: 0;
+      height: 100%;
+      border-radius: 4px;
+      width: 0%;
+      transition: width 1.4s cubic-bezier(.4,0,.2,1);
+    }
+    .compress-showcase.animated .compress-stat-fill { width: var(--fill); }
+    .compress-stat-fill.original { background: var(--text-muted); }
+    .compress-stat-fill.compressed { background: #f97316; }
+    .compress-stat-val {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      width: 42px;
+      flex-shrink: 0;
+    }
+    .compress-stat-val.saved {
+      color: var(--accent-green);
+      font-weight: 700;
+    }
+    .compress-arrow {
+      font-size: 0.7rem;
+      color: var(--accent-green);
+      text-align: center;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition-delay: 1.2s;
+    }
+    .compress-showcase.animated .compress-arrow {
+      opacity: 1;
+      transform: scale(1);
     }
 
     /* Tome — collectible card showcase */
@@ -614,25 +796,132 @@
     .tome-card-mini:nth-child(3) { animation: cardFloat 3.8s ease-in-out infinite 1s; }
     .tome-card-mini:nth-child(4) { animation: cardFloat 4.2s ease-in-out infinite 1.5s; }
 
-    /* Graze (formerly Pickl) — ingredient scanner */
-    .graze-showcase {
+    /* Holo foil overlay */
+    .tome-card-mini .holo {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0;
+      mix-blend-mode: color-dodge;
+      background: linear-gradient(
+        125deg,
+        rgba(255,100,100,0.2) 0%,
+        rgba(255,200,100,0.15) 15%,
+        rgba(100,255,100,0.2) 30%,
+        rgba(100,200,255,0.15) 50%,
+        rgba(200,100,255,0.2) 70%,
+        rgba(255,100,200,0.15) 85%,
+        rgba(255,100,100,0.2) 100%
+      );
+      background-size: 200% 200%;
+    }
+    .tome-card-mini.holo-active .holo {
+      opacity: 1;
+      animation: holoShift 3s ease-in-out infinite;
+    }
+    @keyframes holoShift {
+      0% { background-position: 0% 0%; }
+      50% { background-position: 100% 100%; }
+      100% { background-position: 0% 0%; }
+    }
+    /* Sparkle dots */
+    .tome-card-mini .sparkle {
+      position: absolute;
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: #fff;
+      pointer-events: none;
+      z-index: 3;
+      opacity: 0;
+    }
+    .tome-card-mini.holo-active .sparkle {
+      animation: sparkle 2s ease-in-out infinite;
+    }
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0); }
+      50% { opacity: 0.9; transform: scale(1); }
+    }
+
+    /* Three Body — orbital sim visual */
+    .three-visual {
       position: relative;
       margin: 0 -24px 16px;
-      overflow: hidden;
+      height: 120px;
       border-bottom: 1px solid var(--card-border);
-      background: linear-gradient(135deg, color-mix(in srgb, var(--accent-green) 4%, transparent), transparent);
-      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-      -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      background: radial-gradient(ellipse at 50% 50%, color-mix(in srgb, var(--accent-primary) 4%, var(--bg)), var(--bg));
+      overflow: hidden;
     }
-    .graze-showcase::after {
-      content: '';
+    .three-body {
       position: absolute;
-      left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
-      box-shadow: 0 0 12px var(--accent-green);
-      animation: scanLine 2.5s ease-in-out infinite;
-      z-index: 2;
+      border-radius: 50%;
+      box-shadow: 0 0 12px currentColor;
     }
+    .three-body:nth-child(1) {
+      width: 14px; height: 14px;
+      background: #f87171; color: #f87171;
+      animation: orbit1 6s linear infinite;
+    }
+    .three-body:nth-child(2) {
+      width: 10px; height: 10px;
+      background: #60a5fa; color: #60a5fa;
+      animation: orbit2 4.5s linear infinite;
+    }
+    .three-body:nth-child(3) {
+      width: 8px; height: 8px;
+      background: #fbbf24; color: #fbbf24;
+      animation: orbit3 7.5s linear infinite;
+    }
+    /* Trails */
+    .three-trail {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid;
+      fill: none;
+      opacity: 0.08;
+    }
+    .three-trail:nth-child(4) {
+      width: 160px; height: 100px;
+      top: 10px; left: calc(50% - 80px);
+      border-color: #f87171;
+      transform: rotate(-15deg);
+    }
+    .three-trail:nth-child(5) {
+      width: 120px; height: 80px;
+      top: 20px; left: calc(50% - 50px);
+      border-color: #60a5fa;
+      transform: rotate(10deg);
+    }
+    .three-trail:nth-child(6) {
+      width: 180px; height: 70px;
+      top: 25px; left: calc(50% - 100px);
+      border-color: #fbbf24;
+      transform: rotate(-5deg);
+    }
+    @keyframes orbit1 {
+      0%   { top: 20%; left: 25%; }
+      25%  { top: 55%; left: 60%; }
+      50%  { top: 30%; left: 70%; }
+      75%  { top: 65%; left: 30%; }
+      100% { top: 20%; left: 25%; }
+    }
+    @keyframes orbit2 {
+      0%   { top: 60%; left: 55%; }
+      25%  { top: 25%; left: 35%; }
+      50%  { top: 50%; left: 20%; }
+      75%  { top: 30%; left: 65%; }
+      100% { top: 60%; left: 55%; }
+    }
+    @keyframes orbit3 {
+      0%   { top: 40%; left: 45%; }
+      25%  { top: 15%; left: 55%; }
+      50%  { top: 70%; left: 40%; }
+      75%  { top: 45%; left: 70%; }
+      100% { top: 40%; left: 45%; }
+    }
+
+    /* (graze-showcase removed — now uses graze-report) */
 
     /* ════ Marquee ════ */
     .product-showcase {
@@ -771,7 +1060,8 @@
       background: var(--accent-green);
       flex-shrink: 0;
     }
-    .product-detail-card .btn-secondary {
+    .product-detail-card .btn-secondary,
+    .product-detail-card .btn-primary {
       margin-top: 16px;
       display: inline-block;
     }
@@ -982,11 +1272,11 @@
         </div>
         <h1>AI tools that<br><em>just work.</em></h1>
         <p class="hero-desc">
-          We build AI-native products that solve real problems. Our first product, Sell Applesauce,
-          turns photos into marketplace listings in seconds. More tools shipping soon.
+          We build AI-native products that solve real problems — from photo-to-listing for resellers,
+          to ingredient safety scanning, collectible card games, and physics simulators. All live, all free to try.
         </p>
         <div class="hero-actions">
-          <a href="https://sell.applesauce.chat" class="btn-primary">Try Sell Applesauce</a>
+          <a href="https://sell.applesauce.chat" class="btn-primary">Try Sell &rarr;</a>
           <a href="#products" class="btn-secondary">See all products</a>
         </div>
       </div>
@@ -1004,7 +1294,7 @@
       <span class="stat-label">Years Coding</span>
     </div>
     <div class="stat-item">
-      <span class="stat-number" data-target="5">5</span>
+      <span class="stat-number" data-target="6">6</span>
       <span class="stat-label">Products</span>
     </div>
     <div class="stat-item">
@@ -1026,7 +1316,7 @@
         <div class="glass-card product-featured tilt-card reveal" style="position:relative;">
           <div class="card-shine"></div>
           <div class="product-status status-live"><span class="dot"></span> Live</div>
-          <h3>Sell Applesauce</h3>
+          <h3>Sell</h3>
           <p>Our first product. Snap a photo of anything you want to sell — AI identifies the item, researches real eBay sold prices, and generates optimized listings for eBay and Facebook Marketplace. Ready to post in seconds, auto-posting included.</p>
 
           <div class="product-showcase">
@@ -1077,7 +1367,32 @@
             <span>playwright</span>
             <span>ebay api</span>
           </div>
-          <a href="https://sell.applesauce.chat" class="btn-primary" style="margin-top: 16px;">Try Sell Applesauce</a>
+          <a href="https://sell.applesauce.chat" class="btn-primary" style="margin-top: 16px;">Start Selling &rarr;</a>
+        </div>
+
+        <!-- Three Body — physics simulation -->
+        <div class="glass-card tilt-card reveal" style="position:relative; overflow:hidden;">
+          <div class="card-shine"></div>
+          <div class="three-visual">
+            <div class="three-body"></div>
+            <div class="three-body"></div>
+            <div class="three-body"></div>
+            <div class="three-trail"></div>
+            <div class="three-trail"></div>
+            <div class="three-trail"></div>
+          </div>
+          <div style="padding: 0 24px 24px;">
+            <div class="product-status status-live"><span class="dot"></span> Live</div>
+            <h3>Three Body</h3>
+            <p>Interactive three-body gravitational simulator. Watch chaotic orbital dynamics unfold in real time — tweak mass, velocity, and boundary modes. Torus or plane. Eat or bounce.</p>
+            <div class="tech-tags">
+              <span>physics</span>
+              <span>webgl</span>
+              <span>n-body</span>
+              <span>chaos theory</span>
+            </div>
+            <a href="https://three.applesauce.chat" class="btn-primary" style="margin-top: 12px;">Launch Simulator &rarr;</a>
+          </div>
         </div>
 
         <!-- Tome — collectible card game -->
@@ -1085,6 +1400,10 @@
           <div class="card-shine"></div>
           <div class="tome-showcase">
             <div class="tome-card-mini rarity-legendary">
+              <div class="holo"></div>
+              <span class="sparkle" style="top:15%;left:20%;animation-delay:0s"></span>
+              <span class="sparkle" style="top:60%;left:70%;animation-delay:0.7s"></span>
+              <span class="sparkle" style="top:35%;left:50%;animation-delay:1.4s"></span>
               <span class="tome-card-element">&#9876;</span>
               <span class="tome-card-rarity" style="color:#fbbf24">LEGENDARY</span>
               <div class="tome-card-img">&#128293;</div>
@@ -1095,6 +1414,9 @@
               </div>
             </div>
             <div class="tome-card-mini rarity-epic">
+              <div class="holo"></div>
+              <span class="sparkle" style="top:25%;left:30%;animation-delay:0.3s"></span>
+              <span class="sparkle" style="top:70%;left:60%;animation-delay:1.1s"></span>
               <span class="tome-card-element">&#10052;</span>
               <span class="tome-card-rarity" style="color:#a78bfa">EPIC</span>
               <div class="tome-card-img">&#9889;</div>
@@ -1105,6 +1427,9 @@
               </div>
             </div>
             <div class="tome-card-mini rarity-rare">
+              <div class="holo"></div>
+              <span class="sparkle" style="top:40%;left:25%;animation-delay:0.6s"></span>
+              <span class="sparkle" style="top:20%;left:75%;animation-delay:1.3s"></span>
               <span class="tome-card-element">&#127811;</span>
               <span class="tome-card-rarity" style="color:#60a5fa">RARE</span>
               <div class="tome-card-img">&#128056;</div>
@@ -1115,6 +1440,7 @@
               </div>
             </div>
             <div class="tome-card-mini rarity-common">
+              <div class="holo"></div>
               <span class="tome-card-element">&#127754;</span>
               <span class="tome-card-rarity" style="color:var(--text-dim)">COMMON</span>
               <div class="tome-card-img">&#128167;</div>
@@ -1135,54 +1461,51 @@
               <span>card clash</span>
               <span>fusion</span>
             </div>
-            <a href="https://tome.applesauce.chat" class="btn-primary" style="margin-top: 12px;">Summon a Card</a>
+            <a href="https://tome.applesauce.chat" class="btn-primary" style="margin-top: 12px;">Summon a Card &rarr;</a>
           </div>
         </div>
 
         <!-- Graze — ingredient safety scanner -->
         <div class="glass-card tilt-card reveal" style="position:relative; overflow:hidden;">
           <div class="card-shine"></div>
-          <div class="graze-showcase">
-            <div class="graze-track">
-              <span class="graze-pill safe">Vitamin C</span>
-              <span class="graze-pill safe">Citric Acid</span>
-              <span class="graze-pill warn">Yellow #5</span>
-              <span class="graze-pill safe">Niacin</span>
-              <span class="graze-pill bad">BHA</span>
-              <span class="graze-pill safe">Riboflavin</span>
-              <span class="graze-pill warn">Carrageenan</span>
-              <span class="graze-pill safe">Iron</span>
-              <span class="graze-pill safe">Calcium</span>
-              <span class="graze-pill bad">Sodium Nitrite</span>
-              <span class="graze-pill safe">Thiamine</span>
-              <span class="graze-pill warn">Soy Lecithin</span>
-              <span class="graze-pill safe">Folic Acid</span>
-              <span class="graze-pill bad">Red #40</span>
-              <span class="graze-pill safe">Zinc</span>
-              <span class="graze-pill warn">Maltodextrin</span>
-              <span class="graze-pill safe">Biotin</span>
-              <span class="graze-pill safe">Potassium</span>
-              <!-- duplicate for seamless loop -->
-              <span class="graze-pill safe">Vitamin C</span>
-              <span class="graze-pill safe">Citric Acid</span>
-              <span class="graze-pill warn">Yellow #5</span>
-              <span class="graze-pill safe">Niacin</span>
-              <span class="graze-pill bad">BHA</span>
-              <span class="graze-pill safe">Riboflavin</span>
-              <span class="graze-pill warn">Carrageenan</span>
-              <span class="graze-pill safe">Iron</span>
-              <span class="graze-pill safe">Calcium</span>
-              <span class="graze-pill bad">Sodium Nitrite</span>
-              <span class="graze-pill safe">Thiamine</span>
-              <span class="graze-pill warn">Soy Lecithin</span>
-              <span class="graze-pill safe">Folic Acid</span>
-              <span class="graze-pill bad">Red #40</span>
-              <span class="graze-pill safe">Zinc</span>
-              <span class="graze-pill warn">Maltodextrin</span>
-              <span class="graze-pill safe">Biotin</span>
-              <span class="graze-pill safe">Potassium</span>
+          <div class="graze-report" id="grazeReport">
+            <div class="graze-ring" id="grazeRing">
+              <svg viewBox="0 0 64 64">
+                <circle class="graze-ring-bg" cx="32" cy="32" r="30"/>
+                <circle class="graze-ring-fill" cx="32" cy="32" r="30"/>
+              </svg>
+              <div class="graze-ring-label">
+                <span class="graze-ring-score">91</span>
+                <span class="graze-ring-sub">score</span>
+              </div>
             </div>
-            <span class="graze-score">A+</span>
+            <div class="graze-bars">
+              <div class="graze-bar-row" style="transition-delay:0.2s">
+                <span class="graze-bar-name">Vitamin C</span>
+                <div class="graze-bar-track"><div class="graze-bar-fill safe" style="--fill:92%"></div></div>
+                <span class="graze-bar-val" style="color:var(--accent-green)">ok</span>
+              </div>
+              <div class="graze-bar-row" style="transition-delay:0.35s">
+                <span class="graze-bar-name">Citric Acid</span>
+                <div class="graze-bar-track"><div class="graze-bar-fill safe" style="--fill:85%"></div></div>
+                <span class="graze-bar-val" style="color:var(--accent-green)">ok</span>
+              </div>
+              <div class="graze-bar-row" style="transition-delay:0.5s">
+                <span class="graze-bar-name">Yellow #5</span>
+                <div class="graze-bar-track"><div class="graze-bar-fill warn" style="--fill:45%"></div></div>
+                <span class="graze-bar-val" style="color:var(--accent-gold)">!</span>
+              </div>
+              <div class="graze-bar-row" style="transition-delay:0.65s">
+                <span class="graze-bar-name">BHA</span>
+                <div class="graze-bar-track"><div class="graze-bar-fill bad" style="--fill:22%"></div></div>
+                <span class="graze-bar-val" style="color:var(--accent-red)">!!</span>
+              </div>
+              <div class="graze-bar-row" style="transition-delay:0.8s">
+                <span class="graze-bar-name">Niacin</span>
+                <div class="graze-bar-track"><div class="graze-bar-fill safe" style="--fill:88%"></div></div>
+                <span class="graze-bar-val" style="color:var(--accent-green)">ok</span>
+              </div>
+            </div>
           </div>
           <div style="padding: 0 24px 24px;">
             <div class="product-status status-live"><span class="dot"></span> Live</div>
@@ -1194,7 +1517,55 @@
               <span>56 additives</span>
               <span>allergen profiles</span>
             </div>
-            <a href="https://graze.applesauce.chat" class="btn-secondary" style="margin-top: 12px;">Try Graze</a>
+            <a href="https://graze.applesauce.chat" class="btn-primary" style="margin-top: 12px;">Scan a Label &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Compress — browser video compression -->
+        <div class="glass-card tilt-card reveal" style="position:relative; overflow:hidden;">
+          <div class="card-shine"></div>
+          <div class="compress-showcase" id="compressShowcase">
+            <div class="compress-ring-wrap">
+              <svg viewBox="0 0 64 64">
+                <defs>
+                  <linearGradient id="compressGrad" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#f97316"/>
+                    <stop offset="100%" stop-color="#ec4899"/>
+                  </linearGradient>
+                </defs>
+                <circle class="compress-ring-bg" cx="32" cy="32" r="30"/>
+                <circle class="compress-ring-fill" cx="32" cy="32" r="30"/>
+              </svg>
+              <div class="compress-ring-label">
+                <span class="compress-ring-pct">73%</span>
+                <span class="compress-ring-sub">smaller</span>
+              </div>
+            </div>
+            <div class="compress-stats">
+              <div class="compress-stat-row" style="transition-delay:0.2s">
+                <span class="compress-stat-label">before</span>
+                <div class="compress-stat-bar"><div class="compress-stat-fill original" style="--fill:100%"></div></div>
+                <span class="compress-stat-val">248 MB</span>
+              </div>
+              <div class="compress-stat-row" style="transition-delay:0.5s">
+                <span class="compress-stat-label">after</span>
+                <div class="compress-stat-bar"><div class="compress-stat-fill compressed" style="--fill:27%"></div></div>
+                <span class="compress-stat-val">67 MB</span>
+              </div>
+              <div class="compress-arrow" style="transition-delay:1s">&#10003; 181 MB saved</div>
+            </div>
+          </div>
+          <div style="padding: 0 24px 24px;">
+            <div class="product-status status-live"><span class="dot"></span> Live</div>
+            <h3>Compress</h3>
+            <p>Shrink any video right in your browser. FFmpeg runs locally via WebAssembly — nothing leaves your device. Pick a quality preset, watch the progress ring fill, and download. No uploads, no accounts, no tracking.</p>
+            <div class="tech-tags">
+              <span>ffmpeg.wasm</span>
+              <span>h.264</span>
+              <span>pwa</span>
+              <span>offline</span>
+            </div>
+            <a href="https://compress.applesauce.chat" class="btn-primary" style="margin-top: 12px;">Compress a Video &rarr;</a>
           </div>
         </div>
 
@@ -1309,41 +1680,38 @@
             <span class="product-feature">Image deduplication (skip re-analysis)</span>
             <span class="product-feature">Shareable listing pages</span>
           </div>
-          <a href="https://sell.applesauce.chat" class="btn-secondary">Try Sell</a>
+          <a href="https://sell.applesauce.chat" class="btn-primary">Start Selling &rarr;</a>
           <a href="https://sell.applesauce.chat/about" class="btn-secondary" style="margin-left: 8px;">Learn more</a>
         </div>
 
-        <!-- Pickl -->
+        <!-- Three Body -->
         <div class="product-detail-card">
           <div class="product-detail-header">
-            <h3>Pickl</h3>
+            <h3>Three Body</h3>
             <span class="product-badge live">Live</span>
           </div>
           <p>
-            Point your camera at any food or cosmetics label and get an instant safety report. Pickl reads every ingredient, cross-references it against databases of 56 flagged food additives, 82 cosmetic ingredients of concern, and 50+ allergen keywords, then gives you a clear safety score.
+            An interactive gravitational simulator that models the classic three-body problem — one of the most famous unsolved problems in physics. Three celestial bodies orbit each other in real time, creating chaotic, unpredictable trajectories that never repeat.
           </p>
           <p>
-            No more squinting at labels or Googling ingredients one by one. Pickl uses GPT-5.1 vision to extract text from the messiest labels — curved bottles, tiny print, multiple languages — and maps each ingredient against Open Food Facts and curated safety databases. You get a breakdown of what's fine, what's worth knowing about, and what to watch out for.
+            Customize each particle's mass and velocity, switch between torus and plane boundary conditions, toggle between eat and bounce collision modes, and follow individual bodies as they trace paths through space. A playground for chaos theory, orbital mechanics, and just watching things crash into each other.
           </p>
           <div class="product-features">
-            <span class="product-feature">Photo-to-ingredient extraction</span>
-            <span class="product-feature">56 flagged food additives database</span>
-            <span class="product-feature">82 cosmetic ingredients of concern</span>
-            <span class="product-feature">Allergen detection (50+ keywords)</span>
-            <span class="product-feature">Open Food Facts API integration</span>
-            <span class="product-feature">Weighted safety scoring</span>
-            <span class="product-feature">Scan history & ingredient cache</span>
-            <span class="product-feature">5 free scans per day</span>
+            <span class="product-feature">Real-time gravitational simulation</span>
+            <span class="product-feature">Configurable mass & velocity</span>
+            <span class="product-feature">Torus & plane boundary modes</span>
+            <span class="product-feature">Eat & bounce collision physics</span>
+            <span class="product-feature">Follow individual bodies</span>
+            <span class="product-feature">Chaotic orbital dynamics</span>
           </div>
-          <a href="https://pickl.applesauce.chat" class="btn-secondary">Try Pickl</a>
-          <a href="https://pickl.applesauce.chat/about" class="btn-secondary" style="margin-left: 8px;">Learn more</a>
+          <a href="https://three.applesauce.chat" class="btn-primary">Launch Simulator &rarr;</a>
         </div>
 
         <!-- Tome -->
         <div class="product-detail-card">
           <div class="product-detail-header">
             <h3>Tome</h3>
-            <span class="product-badge soon">Coming Soon</span>
+            <span class="product-badge live">Live</span>
           </div>
           <p>
             A collectible card game where every card starts as a photo. Take a picture of anything — your cat, a sunset, a weird rock — and Tome turns it into a playable card with stats, an element, and a rarity tier. Then battle other players' cards in Card Clash.
@@ -1361,8 +1729,59 @@
             <span class="product-feature">Collection & deck building</span>
             <span class="product-feature">Global leaderboard</span>
           </div>
-          <a href="https://tome.applesauce.chat" class="btn-secondary">Explore Tome</a>
+          <a href="https://tome.applesauce.chat" class="btn-primary">Summon a Card &rarr;</a>
           <a href="https://tome.applesauce.chat/about" class="btn-secondary" style="margin-left: 8px;">Learn more</a>
+        </div>
+
+        <!-- Graze -->
+        <div class="product-detail-card">
+          <div class="product-detail-header">
+            <h3>Graze</h3>
+            <span class="product-badge live">Live</span>
+          </div>
+          <p>
+            Know what's in your products. Point your camera at any food, cosmetics, supplement, or baby care label and get an instant safety report. Graze reads every ingredient, cross-references it against databases of 56 flagged food additives, 82 cosmetic ingredients of concern, and 50+ allergen keywords, then gives you a clear safety score out of 100.
+          </p>
+          <p>
+            Set up a personal allergen profile and get highlighted matches in every scan. No more squinting at labels or Googling ingredients one by one — Graze uses GPT vision to extract text from the messiest labels and maps each ingredient against Open Food Facts and curated safety databases.
+          </p>
+          <div class="product-features">
+            <span class="product-feature">Photo-to-ingredient extraction</span>
+            <span class="product-feature">56 flagged food additives database</span>
+            <span class="product-feature">82 cosmetic ingredients of concern</span>
+            <span class="product-feature">Personal allergen profiles</span>
+            <span class="product-feature">Open Food Facts API integration</span>
+            <span class="product-feature">Safety score /100</span>
+            <span class="product-feature">Scan history & ingredient cache</span>
+            <span class="product-feature">5 free scans per day</span>
+          </div>
+          <a href="https://graze.applesauce.chat" class="btn-primary">Scan a Label &rarr;</a>
+        </div>
+
+        <!-- Compress -->
+        <div class="product-detail-card">
+          <div class="product-detail-header">
+            <h3>Compress</h3>
+            <span class="product-badge live">Live</span>
+          </div>
+          <p>
+            A privacy-first video compression tool that runs entirely in your browser. Select a video, pick a quality preset, and FFmpeg compiled to WebAssembly does the rest — no file ever leaves your device. The ~30 MB engine downloads once and caches for offline use.
+          </p>
+          <p>
+            Supports H.264 encoding with high, medium, and low quality presets, plus a target-size mode for hitting specific file size limits. Real-time progress tracking, detailed codec stats, and a sample-based test mode that estimates output size before committing to a full encode. Works offline as a PWA.
+          </p>
+          <div class="product-features">
+            <span class="product-feature">Browser-native FFmpeg (WebAssembly)</span>
+            <span class="product-feature">H.264/libx264 encoding</span>
+            <span class="product-feature">High/Medium/Low quality presets</span>
+            <span class="product-feature">Target file size mode</span>
+            <span class="product-feature">Sample-based size estimation</span>
+            <span class="product-feature">Real-time progress & ETA</span>
+            <span class="product-feature">Offline PWA support</span>
+            <span class="product-feature">Zero tracking, zero uploads</span>
+          </div>
+          <a href="https://compress.applesauce.chat" class="btn-primary">Compress a Video &rarr;</a>
+          <a href="https://github.com/Tsangares/compress" class="btn-secondary" style="margin-left: 8px;">Source code</a>
         </div>
 
         <!-- Open Source -->
@@ -1387,7 +1806,7 @@
             <span class="product-feature">Causal inference tools</span>
             <span class="product-feature">PyTorch & ML pipelines</span>
           </div>
-          <a href="https://github.com/tsangares" class="btn-secondary">Browse on GitHub</a>
+          <a href="https://github.com/tsangares" class="btn-primary">Browse on GitHub &rarr;</a>
           <a href="https://gradstudent.me" class="btn-secondary" style="margin-left: 8px;">Academic work</a>
         </div>
       </div>
@@ -1418,9 +1837,12 @@
       </div>
       <div class="footer-col">
         <h4>Products</h4>
+        <a href="https://applesauce.chat">Home</a>
         <a href="https://sell.applesauce.chat">Sell</a>
+        <a href="https://three.applesauce.chat">Three Body</a>
         <a href="https://tome.applesauce.chat">Tome</a>
-        <a href="https://pickl.applesauce.chat">Pickl</a>
+        <a href="https://graze.applesauce.chat">Graze</a>
+        <a href="https://compress.applesauce.chat">Compress</a>
         <a href="https://github.com/tsangares">Open Source</a>
       </div>
       <div class="footer-col">
@@ -1531,6 +1953,50 @@
           card.style.transform = '';
         });
       });
+    }
+
+    // Graze report animation
+    const grazeReport = document.getElementById('grazeReport');
+    if (grazeReport) {
+      const grazeObs = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          grazeReport.classList.add('animated');
+          document.getElementById('grazeRing').classList.add('animated');
+          grazeObs.disconnect();
+        }
+      }, { threshold: 0.3 });
+      grazeObs.observe(grazeReport);
+    }
+
+    // Compress showcase animation
+    const compressShowcase = document.getElementById('compressShowcase');
+    if (compressShowcase) {
+      const compressObs = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          compressShowcase.classList.add('animated');
+          compressObs.disconnect();
+        }
+      }, { threshold: 0.3 });
+      compressObs.observe(compressShowcase);
+    }
+
+    // Tome holo — randomly activate holo shimmer on cards
+    const tomeCards = document.querySelectorAll('.tome-card-mini');
+    if (tomeCards.length && !prefersReducedMotion) {
+      function randomHolo() {
+        tomeCards.forEach(c => c.classList.remove('holo-active'));
+        // Pick 1-2 random cards to shimmer
+        const count = Math.random() > 0.5 ? 2 : 1;
+        const indices = [];
+        while (indices.length < count) {
+          const idx = Math.floor(Math.random() * tomeCards.length);
+          if (!indices.includes(idx)) indices.push(idx);
+        }
+        indices.forEach(i => tomeCards[i].classList.add('holo-active'));
+        setTimeout(randomHolo, 2500 + Math.random() * 2000);
+      }
+      // Start after a short delay
+      setTimeout(randomHolo, 1000);
     }
 
     // Terminal typing
