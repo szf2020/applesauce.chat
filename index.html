@@ -50,6 +50,23 @@
       --blur: 12px;
       --z-sticky: 50; --z-noise: 9999;
       --toggle-icon: "dark_mode";
+
+      /* Accent derivation — set --accent once, derive all states */
+      --accent: var(--accent-primary);
+      --accent-hover: color-mix(in oklch, var(--accent) 85%, white);
+      --accent-active: color-mix(in oklch, var(--accent) 85%, black);
+      --accent-subtle: color-mix(in oklch, var(--accent) 12%, var(--bg));
+      --accent-muted: color-mix(in oklch, var(--accent) 6%, var(--bg));
+      --accent-border: color-mix(in oklch, var(--accent) 25%, transparent);
+      --accent-focus: color-mix(in oklch, var(--accent) 40%, transparent);
+
+      /* Depth tokens — dark theme uses white overlays */
+      --depth-1: rgba(255,255,255,0.04);
+      --depth-2: rgba(255,255,255,0.07);
+      --depth-3: rgba(255,255,255,0.12);
+      --depth-glow: inset 0 1px 0 rgba(255,255,255,0.06);
+      --depth-border-from: rgba(255,255,255,0.10);
+      --depth-border-to: rgba(255,255,255,0.03);
     }
 
     [data-theme="warm"] {
@@ -68,6 +85,23 @@
       --accent-gold: #D4A23A;
       --listing-bg: rgba(255,255,255,0.4);
       --toggle-icon: "light_mode";
+
+      /* Accent derivation — warm tints are stronger */
+      --accent: var(--accent-primary);
+      --accent-hover: color-mix(in oklch, var(--accent) 80%, black);
+      --accent-active: color-mix(in oklch, var(--accent) 70%, black);
+      --accent-subtle: color-mix(in oklch, var(--accent) 10%, var(--bg));
+      --accent-muted: color-mix(in oklch, var(--accent) 5%, var(--bg));
+      --accent-border: color-mix(in oklch, var(--accent) 20%, transparent);
+      --accent-focus: color-mix(in oklch, var(--accent) 35%, transparent);
+
+      /* Depth tokens — warm theme uses dark overlays inverted */
+      --depth-1: rgba(42,33,24,0.03);
+      --depth-2: rgba(42,33,24,0.06);
+      --depth-3: rgba(42,33,24,0.10);
+      --depth-glow: inset 0 -1px 0 rgba(42,33,24,0.04);
+      --depth-border-from: rgba(212,197,170,0.35);
+      --depth-border-to: rgba(212,197,170,0.12);
     }
 
     html { scroll-behavior: smooth; overflow-x: hidden; }
@@ -175,6 +209,7 @@
       transition: var(--transition-quick);
     }
     .nav-link:hover { color: var(--text); background: var(--bg-subtle); }
+    .nav-link:focus-visible { outline: 2px solid var(--accent-focus); outline-offset: 2px; }
     .theme-toggle {
       width: 36px; height: 36px;
       display: flex; align-items: center; justify-content: center;
@@ -309,7 +344,13 @@
       box-shadow: 0 4px 0 color-mix(in srgb, var(--accent-primary) 50%, #000),
                   0 8px 20px rgba(0,0,0,0.4);
     }
-    .btn-primary:active { transform: translateY(1px); }
+    .btn-primary:active {
+      transform: translateY(1px) scale(0.97);
+      box-shadow: 0 1px 0 color-mix(in srgb, var(--accent-primary) 50%, #000),
+                  0 2px 6px rgba(0,0,0,0.2);
+      transition-duration: 0.05s;
+    }
+    .btn-primary:focus-visible { outline: 2px solid var(--accent-focus); outline-offset: 3px; }
 
     .btn-secondary {
       display: inline-flex; align-items: center; gap: 8px;
@@ -326,6 +367,8 @@
       text-decoration: none;
     }
     .btn-secondary:hover { color: var(--text); border-color: var(--accent-primary); background: var(--bg-subtle); }
+    .btn-secondary:active { transform: scale(0.96); transition-duration: 0.05s; }
+    .btn-secondary:focus-visible { outline: 2px solid var(--accent-focus); outline-offset: 2px; }
 
     /* ════ Stats strip ════ */
     .stats-strip {
@@ -435,6 +478,8 @@
       grid-column: span 2;
       border-color: color-mix(in srgb, var(--accent-primary) 30%, transparent);
       overflow: hidden;
+      background: var(--depth-2);
+      box-shadow: var(--card-shadow), var(--depth-glow);
     }
     .product-status {
       display: inline-flex; align-items: center; gap: 4px;
@@ -1163,6 +1208,7 @@
       transition: all 0.5s var(--ease-out);
     }
     .bench-showcase.animated .bench-agent { opacity: 1; transform: translateX(0); }
+    .bench-showcase.animated .bench-agents > div:last-child { opacity: 1; }
     .bench-agent-dot {
       width: 8px;
       height: 8px;
@@ -1311,12 +1357,13 @@
       border-radius: var(--radius-lg);
       padding: 40px;
       margin-bottom: 32px;
-      backdrop-filter: blur(20px);
       transition: var(--transition-quick);
+      contain: layout style paint;
     }
     .product-detail-card:hover {
       border-color: var(--accent-primary);
       transform: translateY(-2px);
+      box-shadow: var(--card-hover-shadow), var(--depth-glow);
     }
     .product-detail-header {
       display: flex;
@@ -1537,6 +1584,28 @@
       .stat-item { flex: 0 0 calc(50% - 8px); }
     }
 
+    /* ════ Scroll-driven animations (progressive enhancement) ════ */
+    @supports (animation-timeline: view()) {
+      .reveal {
+        animation: scrollReveal linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 30%;
+      }
+      @keyframes scrollReveal {
+        from { opacity: 0; transform: translateY(16px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      /* Scroll progress bar — pure CSS */
+      .scroll-progress {
+        animation: scrollProgress linear;
+        animation-timeline: scroll();
+      }
+      @keyframes scrollProgress {
+        from { width: 0%; }
+        to { width: 100%; }
+      }
+    }
+
     /* ════ Reduced motion ════ */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -1549,8 +1618,16 @@
       .reveal { opacity: 1; transform: none; }
     }
   </style>
+  <script>
+    (function() {
+      var s = localStorage.getItem('applesauce_theme');
+      var d = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme',
+        s === 'dark' ? 'dark' : s === 'warm' ? 'warm' : d ? 'dark' : 'warm');
+    })();
+  </script>
 </head>
-<body data-theme="dark">
+<body>
 
   <div class="scroll-progress" id="scrollProgress"></div>
   <div class="cursor-glow" id="cursorGlow"></div>
@@ -1686,6 +1763,54 @@
             <span>ebay api</span>
           </div>
           <a href="https://sell.applesauce.chat" class="btn-primary" style="margin-top: 16px;">Start Selling &rarr;</a>
+        </div>
+
+        <!-- Game Lab — behavioral economics for LLMs -->
+        <div class="glass-card tilt-card reveal" style="position:relative; overflow:hidden;">
+          <div class="card-shine"></div>
+          <div class="bench-showcase" id="benchShowcase">
+            <div class="bench-matrix">
+              <div class="bench-matrix-corner"></div>
+              <div class="bench-matrix-label">C</div>
+              <div class="bench-matrix-label">D</div>
+              <div class="bench-matrix-label">C</div>
+              <div class="bench-cell bench-cell-cc" style="transition-delay:0.2s"><span>3, 3</span><span class="bench-cell-sub">cooperate</span></div>
+              <div class="bench-cell bench-cell-cd" style="transition-delay:0.35s"><span>0, 5</span><span class="bench-cell-sub">exploited</span></div>
+              <div class="bench-matrix-label">D</div>
+              <div class="bench-cell bench-cell-dc" style="transition-delay:0.5s"><span>5, 0</span><span class="bench-cell-sub">tempt</span></div>
+              <div class="bench-cell bench-cell-dd" style="transition-delay:0.65s"><span>1, 1</span><span class="bench-cell-sub">defect</span></div>
+            </div>
+            <div class="bench-agents">
+              <div class="bench-agent" style="transition-delay:0.4s">
+                <div class="bench-agent-dot" style="background:var(--accent-green)"></div>
+                <div class="bench-agent-bar"><div class="bench-agent-fill" style="--fill:63%; background:var(--accent-green)"></div></div>
+                <span class="bench-agent-name" style="width:56px">Coop 63%</span>
+              </div>
+              <div class="bench-agent" style="transition-delay:0.55s">
+                <div class="bench-agent-dot" style="background:var(--accent-gold)"></div>
+                <div class="bench-agent-bar"><div class="bench-agent-fill" style="--fill:28%; background:var(--accent-gold)"></div></div>
+                <span class="bench-agent-name" style="width:56px">Give 28%</span>
+              </div>
+              <div class="bench-agent" style="transition-delay:0.7s">
+                <div class="bench-agent-dot" style="background:var(--accent-red)"></div>
+                <div class="bench-agent-bar"><div class="bench-agent-fill" style="--fill:50%; background:var(--accent-red)"></div></div>
+                <span class="bench-agent-name" style="width:56px">Bias 50%</span>
+              </div>
+              <div style="font-family:var(--font-mono); font-size:0.4rem; color:var(--text-dim); margin-top:4px; opacity:0; transition:opacity 0.5s var(--ease-out) 1s;">Human baselines</div>
+            </div>
+          </div>
+          <div style="padding: 0 24px 24px;">
+            <div class="product-status status-live"><span class="dot"></span> Live</div>
+            <h3>Game Lab</h3>
+            <p>Do LLMs behave like rational agents or like humans? Play live rounds of the Prisoner's Dilemma, Dictator Game, and 4 more. System prompts flip cooperation from 0% to 100% (Cohen's d&nbsp;=&nbsp;1.98).</p>
+            <div class="tech-tags">
+              <span>fastapi</span>
+              <span>behavioral econ</span>
+              <span>6 games</span>
+              <span>270+ prompts</span>
+            </div>
+            <a href="https://games.applesauce.chat" class="btn-primary" style="margin-top: 12px;">Play a Game &rarr;</a>
+          </div>
         </div>
 
         <!-- Three Body — physics simulation -->
@@ -1921,50 +2046,6 @@
 
         <div class="glass-card tilt-card reveal" style="position:relative; overflow:hidden;">
           <div class="card-shine"></div>
-          <div class="bench-showcase" id="benchShowcase">
-            <div class="bench-matrix">
-              <div class="bench-matrix-corner"></div>
-              <div class="bench-matrix-label">C</div>
-              <div class="bench-matrix-label">D</div>
-              <div class="bench-matrix-label">C</div>
-              <div class="bench-cell bench-cell-cc" style="transition-delay:0.2s"><span>3, 3</span><span class="bench-cell-sub">cooperate</span></div>
-              <div class="bench-cell bench-cell-cd" style="transition-delay:0.35s"><span>0, 5</span><span class="bench-cell-sub">exploited</span></div>
-              <div class="bench-matrix-label">D</div>
-              <div class="bench-cell bench-cell-dc" style="transition-delay:0.5s"><span>5, 0</span><span class="bench-cell-sub">tempt</span></div>
-              <div class="bench-cell bench-cell-dd" style="transition-delay:0.65s"><span>1, 1</span><span class="bench-cell-sub">defect</span></div>
-            </div>
-            <div class="bench-agents">
-              <div class="bench-agent" style="transition-delay:0.4s">
-                <div class="bench-agent-dot" style="background:var(--accent-primary)"></div>
-                <div class="bench-agent-bar"><div class="bench-agent-fill" style="--fill:82%; background:var(--accent-primary)"></div></div>
-                <span class="bench-agent-name">GPT-4</span>
-              </div>
-              <div class="bench-agent" style="transition-delay:0.55s">
-                <div class="bench-agent-dot" style="background:var(--accent-green)"></div>
-                <div class="bench-agent-bar"><div class="bench-agent-fill" style="--fill:68%; background:var(--accent-green)"></div></div>
-                <span class="bench-agent-name">Claude</span>
-              </div>
-              <div class="bench-agent" style="transition-delay:0.7s">
-                <div class="bench-agent-dot" style="background:var(--accent-gold)"></div>
-                <div class="bench-agent-bar"><div class="bench-agent-fill" style="--fill:45%; background:var(--accent-gold)"></div></div>
-                <span class="bench-agent-name">Llama</span>
-              </div>
-            </div>
-          </div>
-          <div style="padding: 0 24px 24px;">
-            <div class="product-status status-dev"><span class="dot"></span> In Development</div>
-            <h3>Bench</h3>
-            <p>Behavioral benchmarking for LLMs. Run game theory, risk, and cognitive bias experiments on any model. Get quantitative behavioral profiles: cooperation rates, risk aversion, loss sensitivity.</p>
-            <div class="tech-tags">
-              <span>python</span>
-              <span>economics</span>
-              <span>llm testing</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="glass-card tilt-card reveal" style="position:relative; overflow:hidden;">
-          <div class="card-shine"></div>
           <div class="oss-showcase" id="ossShowcase">
             <div class="oss-heatmap" id="ossHeatmap"></div>
             <div class="oss-legend">
@@ -2079,6 +2160,32 @@
           </div>
           <a href="https://sell.applesauce.chat" class="btn-primary">Start Selling &rarr;</a>
           <a href="https://sell.applesauce.chat/about" class="btn-secondary" style="margin-left: 8px;">Learn more</a>
+        </div>
+
+        <!-- Game Lab -->
+        <div class="product-detail-card reveal">
+          <div class="product-detail-header">
+            <h3>Game Lab</h3>
+            <span class="product-badge live">Live</span>
+          </div>
+          <p>
+            The Behavioral Game Lab is an interactive research platform that tests whether large language models behave like rational agents or like humans. Run classic behavioral economics experiments — Prisoner's Dilemma, Dictator Game, Ultimatum Game, Public Goods, Trust Game, Volunteer's Dilemma — and compare LLM responses against peer-reviewed human benchmarks.
+          </p>
+          <p>
+            The key finding: system prompts switch LLMs between two cognitive modes. Without a prompt, models default to analytical game-theory reasoning (Nash equilibria, defect, keep money). With embodiment prompts ("You are human," "This is real life"), they shift to cooperative, human-like behavior. The effect size is massive — Cohen's d = 1.98, with cooperation rates swinging from 0% to 100%.
+          </p>
+          <div class="product-features">
+            <span class="product-feature">6 classic behavioral economics games</span>
+            <span class="product-feature">270+ system prompt combinations</span>
+            <span class="product-feature">1,050 trials per model profile</span>
+            <span class="product-feature">Cohen's d = 1.98 effect size</span>
+            <span class="product-feature">Peer-reviewed human baselines</span>
+            <span class="product-feature">Live interactive rounds</span>
+            <span class="product-feature">7-domain behavioral profiling</span>
+            <span class="product-feature">Companion to working paper</span>
+          </div>
+          <a href="https://games.applesauce.chat" class="btn-primary">Play a Game &rarr;</a>
+          <a href="https://games.applesauce.chat/#section-about" class="btn-secondary" style="margin-left: 8px;">About the research</a>
         </div>
 
         <!-- Three Body -->
@@ -2264,6 +2371,7 @@
         <h4>Products</h4>
         <a href="https://applesauce.chat">Home</a>
         <a href="https://sell.applesauce.chat">Sell</a>
+        <a href="https://games.applesauce.chat">Game Lab</a>
         <a href="https://three.applesauce.chat">Three Body</a>
         <a href="https://tome.applesauce.chat">Tome</a>
         <a href="https://graze.applesauce.chat">Graze</a>
@@ -2286,14 +2394,12 @@
   <script>
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Theme
-    const theme = localStorage.getItem('applesauce_theme') || 'dark';
-    document.body.setAttribute('data-theme', theme);
+    // Theme (initial set handled by inline <head> script to prevent FOWT)
     function toggleTheme() {
-      const current = document.body.getAttribute('data-theme');
+      const current = document.documentElement.getAttribute('data-theme');
       const next = current === 'dark' ? 'warm' : 'dark';
       document.body.classList.add('theme-transitioning');
-      document.body.setAttribute('data-theme', next);
+      document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('applesauce_theme', next);
       setTimeout(() => document.body.classList.remove('theme-transitioning'), 500);
     }
