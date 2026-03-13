@@ -2027,15 +2027,15 @@
           </div>
           <div style="padding: 0 24px 24px;">
             <div class="product-status status-live"><span class="dot"></span> Live</div>
-            <h3>Applesauce</h3>
-            <p>The hub. This site: a single page that ties every product together. Open-source, static HTML, zero dependencies. The portfolio and launchpad for everything we ship.</p>
+            <h3>Applesauce Hub</h3>
+            <p>The index. Every Applesauce service in one place — live status, about pages, and quick links. Crawlable SSR so search engines see everything.</p>
             <div class="tech-tags">
-              <span>static html</span>
-              <span>github pages</span>
-              <span>zero deps</span>
-              <span>open source</span>
+              <span>fastapi</span>
+              <span>ssr</span>
+              <span>service registry</span>
+              <span>magic link auth</span>
             </div>
-            <a href="https://applesauce.chat" class="btn-primary" style="margin-top: 12px;">Visit Hub &rarr;</a>
+            <a href="https://hub.applesauce.chat" class="btn-primary" style="margin-top: 12px;">Browse Index &rarr;</a>
           </div>
         </div>
 
@@ -2286,27 +2286,26 @@
         <!-- Applesauce Hub -->
         <div class="product-detail-card reveal">
           <div class="product-detail-header">
-            <h3>Applesauce</h3>
+            <h3>Applesauce Hub</h3>
             <span class="product-badge live">Live</span>
           </div>
           <p>
-            The central hub for every Applesauce product. A single static page (no frameworks, no build step, no dependencies) that showcases every tool, links to every demo, and tells the story of the platform. You're looking at it right now.
+            The central index for every Applesauce service. A FastAPI app that serves as the registry, directory, and about-page aggregator for every subdomain we run. Crawlers see full server-rendered HTML; humans get a clean card grid with live status indicators.
           </p>
           <p>
-            Built as pure HTML, CSS, and vanilla JavaScript. Hosted on GitHub Pages with a custom domain. Dual dark/warm theming, scroll-triggered animations, 3D card tilt effects, and responsive design, all in one self-contained file. Open-source on GitHub.
+            About pages from each service are fetched server-side and cached, so search engines index real content without JavaScript. Admin access via magic link reveals private/internal services. Every new subdomain on applesauce.chat gets registered here first.
           </p>
           <div class="product-features">
-            <span class="product-feature">Single-file static site</span>
-            <span class="product-feature">Zero dependencies</span>
-            <span class="product-feature">GitHub Pages hosting</span>
-            <span class="product-feature">Dark & warm themes</span>
-            <span class="product-feature">Scroll-triggered animations</span>
-            <span class="product-feature">3D card tilt effects</span>
-            <span class="product-feature">Responsive mobile-first</span>
-            <span class="product-feature">Open source</span>
+            <span class="product-feature">Server-side rendered</span>
+            <span class="product-feature">Service registry</span>
+            <span class="product-feature">About page aggregator</span>
+            <span class="product-feature">Crawler-friendly SSR</span>
+            <span class="product-feature">Magic link auth</span>
+            <span class="product-feature">Live status checks</span>
+            <span class="product-feature">18 services tracked</span>
+            <span class="product-feature">1-hour content cache</span>
           </div>
-          <a href="https://applesauce.chat" class="btn-primary">Visit Hub &rarr;</a>
-          <a href="https://github.com/Tsangares/applesauce.chat" class="btn-secondary" style="margin-left: 8px;">Source code</a>
+          <a href="https://hub.applesauce.chat" class="btn-primary">Browse Index &rarr;</a>
         </div>
 
         <!-- Open Source -->
@@ -2365,6 +2364,7 @@
       <div class="footer-col">
         <h4>Products</h4>
         <a href="https://applesauce.chat">Home</a>
+        <a href="https://hub.applesauce.chat">Hub</a>
         <a href="https://sell.applesauce.chat">Sell</a>
         <a href="https://games.applesauce.chat">Game Lab</a>
         <a href="https://three.applesauce.chat">Three Body</a>
